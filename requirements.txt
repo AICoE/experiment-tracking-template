@@ -1,4 +1,3 @@
 mlflow
-tensorflow
 keras
 pandas

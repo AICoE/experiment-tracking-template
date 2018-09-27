@@ -1,4 +1,3 @@
-
 # coding: utf-8
 
 # # MLflow Training Tutorial
@@ -13,22 +12,14 @@
 # * Modeling wine preferences by data mining from physicochemical properties. In Decision Support Systems, Elsevier, 47(4):547-553, 2009.
 # 
 
-# In[10]:
-
-
-# Wine Quality Sample
 def train(in_alpha, in_l1_ratio):
-    import os
     import warnings
-    import sys
-
     import pandas as pd
     import numpy as np
     from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
     from sklearn.model_selection import train_test_split
     from sklearn.linear_model import ElasticNet
 
-    import mlflow
     import mlflow.sklearn
 
     def eval_metrics(actual, pred):
@@ -67,8 +58,10 @@ def train(in_alpha, in_l1_ratio):
     else:
         l1_ratio = float(in_l1_ratio)
 
-         
-    mlflow.set_tracking_uri("http://mlflow-server-svc-vpavlin-jupyterhub.cloud.paas.upshift.redhat.com")
+
+    # mlflow_experiment_id = os.environ.get('MLFLOW_EXPERIMENT_ID')
+    # mlflow_tracking_ui  = os.environ.get("MLFLOW_TRACKING_URI")
+    # mlflow.set_tracking_uri()
     # Useful for multiple runs (only doing one run in this sample notebook)    
     with mlflow.start_run():
         # Execute ElasticNet
@@ -92,23 +85,9 @@ def train(in_alpha, in_l1_ratio):
         mlflow.log_metric("r2", r2)
         mlflow.log_metric("mae", mae)
 
-        mlflow.sklearn.log_model(lr, "model")
-
-
-# In[11]:
-
+        # mlflow.sklearn.log_model(lr, "model")
 
 train(0.5, 0.5)
-
-
-# In[12]:
-
-
 train(0.2, 0.4)
-
-
-# In[13]:
-
-
 train(0.1, 0.1)
 
