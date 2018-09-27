@@ -1,10 +1,8 @@
 # coding: utf-8
 
 # # MLflow Training Tutorial
-# 
-# This `train.pynb` Jupyter notebook predicts the quality of wine using [sklearn.linear_model.ElasticNet](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.ElasticNet.html).  
-# 
-# > This is the Jupyter notebook version of the `train.py` example
+#
+# This is the python app version of the `train.py` example
 # 
 # Attribution
 # * The data set used in this example is from http://archive.ics.uci.edu/ml/datasets/Wine+Quality
@@ -92,6 +90,4 @@ def train(in_alpha, in_l1_ratio):
 alpha = os.environ.get('PARAM_ALPHA')
 l1_ratio = os.environ.get('PARAM_L1_RATIO')
 train(alpha, l1_ratio)
-# train(0.2, 0.4)
-# train(0.1, 0.1)
 
