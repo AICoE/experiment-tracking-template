@@ -12,15 +12,16 @@
 # * Modeling wine preferences by data mining from physicochemical properties. In Decision Support Systems, Elsevier, 47(4):547-553, 2009.
 # 
 
-def train(in_alpha, in_l1_ratio):
-    import warnings
-    import pandas as pd
-    import numpy as np
-    from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-    from sklearn.model_selection import train_test_split
-    from sklearn.linear_model import ElasticNet
+import os
+import warnings
+import pandas as pd
+import numpy as np
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import ElasticNet
+import mlflow.sklearn
 
-    import mlflow.sklearn
+def train(in_alpha, in_l1_ratio):
 
     def eval_metrics(actual, pred):
         rmse = np.sqrt(mean_squared_error(actual, pred))
@@ -60,8 +61,8 @@ def train(in_alpha, in_l1_ratio):
 
 
     # mlflow_experiment_id = os.environ.get('MLFLOW_EXPERIMENT_ID')
-    # mlflow_tracking_ui  = os.environ.get("MLFLOW_TRACKING_URI")
-    # mlflow.set_tracking_uri()
+    # mlflow_tracking_uri  = os.environ.get("MLFLOW_TRACKING_URI")
+    # mlflow.set_tracking_uri(mlflow_tracking_uri)
     # Useful for multiple runs (only doing one run in this sample notebook)    
     with mlflow.start_run():
         # Execute ElasticNet
@@ -87,7 +88,10 @@ def train(in_alpha, in_l1_ratio):
 
         # mlflow.sklearn.log_model(lr, "model")
 
-train(0.5, 0.5)
-train(0.2, 0.4)
-train(0.1, 0.1)
+
+alpha = os.environ.get('PARAM_ALPHA')
+l1_ratio = os.environ.get('PARAM_L1_RATIO')
+train(alpha, l1_ratio)
+# train(0.2, 0.4)
+# train(0.1, 0.1)
 
