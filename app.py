@@ -3,12 +3,12 @@
 # # MLflow Training Tutorial
 #
 # This is the python app version of the `train.py` example
-# 
+#
 # Attribution
 # * The data set used in this example is from http://archive.ics.uci.edu/ml/datasets/Wine+Quality
 # * P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis.
 # * Modeling wine preferences by data mining from physicochemical properties. In Decision Support Systems, Elsevier, 47(4):547-553, 2009.
-# 
+#
 
 import os
 import warnings
@@ -46,22 +46,23 @@ def train(in_alpha, in_l1_ratio):
     test_y = test[["quality"]]
 
     # Set default values if no alpha is provided
-    if float(in_alpha) is None:
-        alpha = 0.5
-    else:
+    try:
         alpha = float(in_alpha)
+    except TypeError:
+        alpha = 0.5
+        print("Using default value for alpha = ",alpha)
 
     # Set default values if no l1_ratio is provided
-    if float(in_l1_ratio) is None:
-        l1_ratio = 0.5
-    else:
+    try:
         l1_ratio = float(in_l1_ratio)
-
+    except TypeError:
+        l1_ratio = 0.5
+        print("Using default value for l1_ratio = ",l1_ratio)
 
     # mlflow_experiment_id = os.environ.get('MLFLOW_EXPERIMENT_ID')
     # mlflow_tracking_uri  = os.environ.get("MLFLOW_TRACKING_URI")
     # mlflow.set_tracking_uri(mlflow_tracking_uri)
-    # Useful for multiple runs (only doing one run in this sample notebook)    
+    # Useful for multiple runs (only doing one run in this sample notebook)
     with mlflow.start_run():
         # Execute ElasticNet
         lr = ElasticNet(alpha=alpha, l1_ratio=l1_ratio, random_state=42)
@@ -90,4 +91,3 @@ def train(in_alpha, in_l1_ratio):
 alpha = os.environ.get('PARAM_ALPHA')
 l1_ratio = os.environ.get('PARAM_L1_RATIO')
 train(alpha, l1_ratio)
-
